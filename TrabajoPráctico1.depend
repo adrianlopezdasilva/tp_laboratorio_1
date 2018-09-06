@@ -1,0 +1,16 @@
+# depslib dependency file v1.0
+1536211369 source:c:\users\mgleo\desktop\trabajopráctico1\main.c
+	<stdio.h>
+	<stdlib.h>
+	"miLibreria.h"
+
+1536211279 c:\users\mgleo\desktop\trabajopráctico1\milibreria.h
+
+1536212642 source:c:\users\mgleo\desktop\trabajopráctico1\funciones.c
+	"Libreria.h"
+	<stdio.h>
+
+1536213271 c:\users\mgleo\desktop\trabajopráctico1\libreria.h
+
+1536212087 source:c:\users\mgleo\desktop\trabajopráctico1\libreria.h
+
