@@ -88,6 +88,27 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
     return retorno;
 }
 
+int controller_nextId(LinkedList* pArrayListEmployee)
+{
+	Employee* bufferEmployee;
+	int auxId;
+	int retorno = -1;
+
+	if(pArrayListEmployee != NULL)
+	{
+		for(int i = 0; i < ll_len(pArrayListEmployee); i++)
+		{
+			bufferEmployee = (Employee*)ll_get(pArrayListEmployee, i);
+			employee_getId(pArrayListEmployee, &auxId);
+			if(auxId)
+			{
+
+			}
+		}
+	}
+
+	return 0;
+}
 /** \brief Modificar datos de empleado
  *
  * \param path char*
@@ -121,7 +142,29 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_ListEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	Employee* bufferEmployee;
+	int retorno = -1;
+	int auxId;
+	char auxNombre[SIZENOMBRE];
+	int auxHoras;
+	int auxSueldo;
+
+	if(pArrayListEmployee != NULL)
+	{
+		printf("\n\nID    NOMBRE       HORAS     SUELDO"); //HEADER
+		for(int i = 0; i < ll_len(pArrayListEmployee); i++)
+		{
+			bufferEmployee = ll_get(pArrayListEmployee,i);
+			employee_getId(bufferEmployee, &auxId);
+			employee_getNombre(bufferEmployee, auxNombre);
+			employee_getHorasTrabajadas(bufferEmployee, &auxHoras);
+			employee_getSueldo(bufferEmployee, &auxSueldo);
+
+			printf("\n%d   -    %s    -   %d      %d  ", auxId, auxNombre, auxHoras, auxSueldo);
+		}
+		retorno = 0;
+	}
+    return retorno;
 }
 
 /** \brief Ordenar empleados
@@ -188,11 +231,23 @@ int controller_saveAsText(char* path , LinkedList* pArrayListEmployee)
  */
 int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 {
+	FILE* pFile;
+	Employee* bufferEmployee;
 	int retorno = -1;
 
 	if(path != NULL && pArrayListEmployee != NULL)
 	{
-
+		pFile = fopen(path,"wb");
+		if(pFile != NULL)
+		{
+			for(int i = 0; i < ll_len(pArrayListEmployee); i++)
+			{
+				bufferEmployee = (Employee*)ll_get(pArrayListEmployee,i);
+				fwrite(bufferEmployee, sizeof(Employee), 1, pFile);
+			}
+			retorno = 0;
+			fclose(pFile);
+		}
 	}
     return retorno;
 }

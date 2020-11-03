@@ -3,7 +3,7 @@
 
 #define SIZENOMBRE 20
 #define MAXIMOSUELDO 100000
-#define MAXIMOHORAS 100
+#define MAXIMOHORAS 1000
 typedef struct
 {
     int id;

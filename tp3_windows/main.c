@@ -24,7 +24,8 @@
 int main()
 {
 	setbuf(stdout, NULL);
-    int option = 0;
+    int option;
+    int flagCargaArchivo = 0;
 
     LinkedList* listaEmpleados = ll_newLinkedList();
 
@@ -45,28 +46,84 @@ int main()
     		switch(option)
     		{
     		case 1:
-    				controller_loadFromText("data.csv",listaEmpleados);
+    				if(flagCargaArchivo == 0)
+    				{
+    					controller_loadFromText("data.csv",listaEmpleados);
+    					flagCargaArchivo = 1;
+    				}
+    				else
+    				{
+    					printf("\nEl archivo ya fue cargado.");
+    				}
+
     				break;
 
     		case 2:
-    				controller_loadFromBinary("data.csv",listaEmpleados);
+    				if(flagCargaArchivo == 0)
+    			    {
+    					controller_loadFromBinary("data.csv",listaEmpleados);
+    			    	flagCargaArchivo = 1;
+    			    }
+    			    else
+    			    {
+    			    	printf("\nEl archivo ya fue cargado.");
+    			    }
     				break;
     		case 3:
-    				if(controller_addEmployee(listaEmpleados) == 0)
+    				if(flagCargaArchivo == 1)
     				{
-    					printf("\nEmpleado cargado exitosamente");
+    					if(controller_addEmployee(listaEmpleados) == 0)
+    					 {
+    						printf("\nEmpleado cargado exitosamente");
+    					 }
+    				}
+    				else
+    				{
+    					printf("\nPrimero debe cargar el archivo.");
     				}
     				break;
+    		case 6:
+    		    	if(flagCargaArchivo == 1)
+    		    	{
+    		    		if(controller_ListEmployee(listaEmpleados) == 0)
+    		    		{
+    		    			printf("\nOperacion cargado exitosamente");
+    		    		}
+    		    	}
+    		    	else
+    		    	{
+    		    		printf("\nPrimero debe cargar el archivo.");
+    		    	}
+    		        break;
     		case 8:
-    				if(controller_saveAsText("data.csv", listaEmpleados) == 0)
-    				{
-    					printf("\nOperacion realizada exitosamente");
-    				}
-    			break;
+    				if(flagCargaArchivo == 1)
+    			    {
+    			    	if(controller_saveAsText("data.csv",listaEmpleados) == 0)
+    			    	{
+    			    		printf("\nOperacion cargado exitosamente");
+    			    	}
+    			    }
+    			    else
+    			    {
+    			    	printf("\nPrimero debe cargar el archivo.");
+    			    }
+    			    break;
+    		case 9:
+    		    	if(flagCargaArchivo == 1)
+    		    	{
+    		    		if(controller_saveAsBinary("data.csv",listaEmpleados) == 0)
+    		    		{
+    		    		printf("\nOperacion cargado exitosamente");
+    		    		}
+    		    	}
+    		    	else
+    		    	{
+    		    		printf("\nPrimero debe cargar el archivo.");
+    		    	}
+    		    	break;
     		}
 
     	}
     }while(option != 10);
     return 0;
 }
-

@@ -20,17 +20,22 @@ int parser_EmployeeFromText(FILE* pFile , LinkedList* pArrayListEmployee)
 	char auxSueldo[4096];
 
 	if(pFile != NULL)
+	{
 		do
 		{
 			if (fscanf(pFile,"%[^,],%[^,],%[^,],%[^\n]\n", auxId,auxNombre ,auxHoras ,auxSueldo)== 4)
 			{
 				printf("%s  - %s   -  %s   -   %s\n", auxId, auxNombre, auxHoras, auxSueldo);
 				bufferEmployee = employee_newParametros(auxId,auxNombre,auxHoras,auxSueldo);
-				ll_add(pArrayListEmployee, bufferEmployee);
+				if(bufferEmployee != NULL)
+				{
+					ll_add(pArrayListEmployee, bufferEmployee);
+				}
 			}
 
 		}while(feof(pFile) == 0);
-
+		retorno = 0;
+	}
     return retorno;
 }
 
