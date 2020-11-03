@@ -1,7 +1,7 @@
 #ifndef employee_H_INCLUDED
 #define employee_H_INCLUDED
 
-#define SIZENOMBRE 20
+#define SIZENOMBRE 40
 #define MAXIMOSUELDO 100000
 #define MAXIMOHORAS 1000
 typedef struct

@@ -286,6 +286,27 @@ int esNumerica(char* cadena, int limite)
 	//BREAK
 	return retorno;
 }
+/*
+int isValidInt(int limite)
+{
+	int retorno = 1; // VERDADERO
+	int i;
+	for(i=0; i<limite;i++)
+	{
+		if(i==0 && (cadena[i] == '+' || cadena[i] == '-'))
+		{
+			continue;
+		}
+		if(cadena[i] > '9' || cadena[i] < '0')
+		{
+			retorno = 0;
+			break;
+		}
+		//CONTINUE
+	}
+	//BREAK
+	return retorno;
+}*/
 /**
  * brief verifica si la cadena de texto es flotante.
  * return 0 si da OK o -1 si no

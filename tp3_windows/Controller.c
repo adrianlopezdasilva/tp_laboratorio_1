@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "LinkedList.h"
 #include "Employee.h"
 #include "parser.h"
@@ -68,9 +69,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		if((utn_getNombre("Ingrese el nombre del empleado: ", "\nEse no es un nombre valido", bufferNombre, 2,SIZENOMBRE) == 0) &&
-		   (utn_getNumero("Ingrese las horas trabajadas del empleado: ", "\nEsa no es una cantidad de horas valida", &bufferHoras, 2,0,MAXIMOHORAS) == 0) &&
-		   (utn_getNumero("Ingrese el sueldo del empleado: ", "\nEse no es un sueldo valido", &bufferSueldo, 2,0,MAXIMOSUELDO) == 0))
+		if((utn_getNombre("\nIngrese el nombre del empleado: ", "\nEse no es un nombre valido", bufferNombre, 2,SIZENOMBRE) == 0) &&
+		   (utn_getNumero("\nIngrese las horas trabajadas del empleado: ", "\nEsa no es una cantidad de horas valida", &bufferHoras, 2,0,MAXIMOHORAS) == 0) &&
+		   (utn_getNumero("\nIngrese el sueldo del empleado: ", "\nEse no es un sueldo valido", &bufferSueldo, 2,0,MAXIMOSUELDO) == 0))
 		{
 			employee_setNombre(bufferEmployee, bufferNombre);
 			employee_setHorasTrabajadas(bufferEmployee, bufferHoras);
@@ -87,7 +88,7 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
     return retorno;
 }
-
+/*
 int controller_nextId(LinkedList* pArrayListEmployee)
 {
 	Employee* bufferEmployee;
@@ -108,7 +109,7 @@ int controller_nextId(LinkedList* pArrayListEmployee)
 	}
 
 	return 0;
-}
+} */
 /** \brief Modificar datos de empleado
  *
  * \param path char*
@@ -250,5 +251,26 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 		}
 	}
     return retorno;
+}
+
+int controller_sortEmployeesByName(void* firstElement , void* secondElement)
+{
+	int retorno = 0;
+	char nombreUno[SIZENOMBRE];
+	char nombreDos[SIZENOMBRE];
+
+	if(employee_getNombre(firstElement, nombreUno)== 0 &&
+	   employee_getNombre(secondElement, nombreDos) == 0)
+	{
+		if(strncmp(firstElement, secondElement, SIZENOMBRE ) > 1)
+		{
+			retorno = 1;
+		}
+		else
+		{
+			retorno = -1;
+		}
+	}
+	return retorno;
 }
 
