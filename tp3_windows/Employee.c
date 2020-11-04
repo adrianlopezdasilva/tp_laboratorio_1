@@ -149,7 +149,7 @@ int employee_compareByName(void* thisOne , void* thisTwo)
 	if(thisOne != NULL && thisTwo != NULL)
 	{
 		if(employee_getNombre(thisOne, nombreUno)== 0 &&
-			employee_getNombre(thisTwo, nombreDos) == 0)
+		   employee_getNombre(thisTwo, nombreDos) == 0)
 		{
 			if(strncmp(thisOne, thisTwo, SIZENOMBRE ) > 1)
 			{

@@ -182,11 +182,11 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		if((utn_getNumero("\nPor que criterio quiere ordenar? Ingrease un numero: \n"
-				          "1 - Ordenar por nombre.\n : "
-						  "2 - Ordenar por horas trabajadas.\n : "
-						  "3 - Ordenar por salario.\n : "
-						  "4 - Salir.\n : ", "\nEsa no es una copcion valida", &opcion, 3,1,4)) == 0)
+		if(utn_getNumero("\nPor que criterio quiere ordenar? Ingrease un numero:"
+				          "\n1. Ordenar por nombre."
+						  "\n2. Ordenar por horas trabajadas."
+						  "\n3. Ordenar por salario."
+						  "\n4. Salir.\n", "\nEsa no es una copcion valida", &opcion, 3,1,4) == 0)
 		{
 			do
 			{

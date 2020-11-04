@@ -31,6 +31,4 @@ int employee_getSueldo(Employee* this,int* sueldo);
 int employee_compareByName(void* thisOne , void* thisTwo);
 int employee_compareByHoursWorked(void* thisOne , void* thisTwo);
 int employee_compareBySalary(void* thisOne , void* thisTwo);
-int employee_sortEmployee(LinkedList* pArrayListEmployee);
-
 #endif // employee_H_INCLUDED
