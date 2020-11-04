@@ -177,7 +177,36 @@ int controller_ListEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_sortEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+	int retorno = -1;
+	int opcion;
+
+	if(pArrayListEmployee != NULL)
+	{
+		if((utn_getNumero("\nPor que criterio quiere ordenar? Ingrease un numero: \n"
+				          "1 - Ordenar por nombre.\n : "
+						  "2 - Ordenar por horas trabajadas.\n : "
+						  "3 - Ordenar por salario.\n : "
+						  "4 - Salir.\n : ", "\nEsa no es una copcion valida", &opcion, 3,1,4)) == 0)
+		{
+			do
+			{
+				switch(opcion)
+				{
+				case 1:
+						ll_sort(pArrayListEmployee,employee_compareByName, 1);
+						break;
+				case 2:
+						ll_sort(pArrayListEmployee,employee_compareByHoursWorked, 1);
+						break;
+				case 3:
+						ll_sort(pArrayListEmployee,employee_compareBySalary, 1);
+						break;
+				}
+			}while(opcion != 4);
+			retorno = 0;
+		}
+	}
+    return retorno;
 }
 
 /** \brief Guarda los datos de los empleados en el archivo data.csv (modo texto).
@@ -247,30 +276,11 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 				fwrite(bufferEmployee, sizeof(Employee), 1, pFile);
 			}
 			retorno = 0;
-			fclose(pFile);
 		}
+		fclose(pFile);
 	}
     return retorno;
 }
 
-int controller_sortEmployeesByName(void* firstElement , void* secondElement)
-{
-	int retorno = 0;
-	char nombreUno[SIZENOMBRE];
-	char nombreDos[SIZENOMBRE];
 
-	if(employee_getNombre(firstElement, nombreUno)== 0 &&
-	   employee_getNombre(secondElement, nombreDos) == 0)
-	{
-		if(strncmp(firstElement, secondElement, SIZENOMBRE ) > 1)
-		{
-			retorno = 1;
-		}
-		else
-		{
-			retorno = -1;
-		}
-	}
-	return retorno;
-}
 

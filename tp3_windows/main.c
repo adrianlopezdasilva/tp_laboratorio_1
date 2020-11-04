@@ -61,7 +61,7 @@ int main()
     		case 2:
     				if(flagCargaArchivo == 0)
     			    {
-    					controller_loadFromBinary("data.csv",listaEmpleados);
+    					controller_loadFromBinary("data.bin",listaEmpleados);
     			    	flagCargaArchivo = 1;
     			    }
     			    else
@@ -87,7 +87,7 @@ int main()
     		    	{
     		    		if(controller_ListEmployee(listaEmpleados) == 0)
     		    		{
-    		    			printf("\nOperacion cargado exitosamente");
+    		    			printf("\nOperacion lograda exitosamente");
     		    		}
     		    	}
     		    	else
@@ -95,12 +95,26 @@ int main()
     		    		printf("\nPrimero debe cargar el archivo.");
     		    	}
     		        break;
+
+    		case 7:
+    				if(flagCargaArchivo == 1)
+    			    {
+    			    	if(controller_sortEmployee(listaEmpleados) == 0)
+    			    	{
+    			    		printf("\nOperacion lograda exitosamente");
+    			    	}
+    			    }
+    			    else
+    			    {
+    			    	printf("\nPrimero debe cargar el archivo.");
+    			    }
+    				break;
     		case 8:
     				if(flagCargaArchivo == 1)
     			    {
     			    	if(controller_saveAsText("data.csv",listaEmpleados) == 0)
     			    	{
-    			    		printf("\nOperacion cargado exitosamente");
+    			    		printf("\nOperacion lograda exitosamente");
     			    	}
     			    }
     			    else
@@ -111,9 +125,9 @@ int main()
     		case 9:
     		    	if(flagCargaArchivo == 1)
     		    	{
-    		    		if(controller_saveAsBinary("data.csv",listaEmpleados) == 0)
+    		    		if(controller_saveAsBinary("data.bin",listaEmpleados) == 0)
     		    		{
-    		    		printf("\nOperacion cargado exitosamente");
+    		    		printf("\nOperacion lograda exitosamente");
     		    		}
     		    	}
     		    	else
