@@ -95,6 +95,16 @@ int main()
     		    		printf("\nPrimero debe cargar el archivo.");
     		    	}
     		    	break;
+    		case 5:
+    		    	if(flagCargaArchivo == 1)
+    		    	{
+    		    		controller_removeEmployee(listaEmpleados);
+    		    	}
+    		    	else
+    		    	{
+    		    		printf("\nPrimero debe cargar el archivo.");
+    		    	}
+    		    	break;
     		case 6:
     		    	if(flagCargaArchivo == 1)
     		    	{

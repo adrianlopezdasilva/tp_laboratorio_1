@@ -189,7 +189,38 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
  */
 int controller_removeEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+    int retorno = -1;
+    int auxId;
+    int flagBorrar = 1;
+    int idABorrar;
+    Employee* bufferEmployee;
+
+    if(pArrayListEmployee != NULL)
+    {
+    	controller_ListEmployee(pArrayListEmployee);
+    	if(utn_getNumero("\nIngrese el id del empleado que desea borrar: ", "\nEse no es un id valido\n",
+		   &auxId, 2,1,99999) == 0)
+    	{
+    		auxId = auxId-1;
+    		bufferEmployee = ll_get(pArrayListEmployee,auxId);
+    		employee_getId(bufferEmployee, &idABorrar);
+
+    		if(utn_getNumero("\nEsta seguro que quiere borrar este empleado?\n1.Abortar operacion.\n2.Confirmar borrar\n",
+    						 "\nEse no es una opcion valida\n",&flagBorrar, 2,1,2) == 0 &&
+    			flagBorrar == 2)
+    		{
+    			ll_remove(pArrayListEmployee, idABorrar);
+    			printf("\nEmpleado eliminado con exito\n");
+    		}
+    		else
+    		{
+    			printf("\nOperacion abortada\n");
+    		}
+    		retorno = 0;
+    	}
+    }
+
+    return retorno;
 }
 
 /** \brief Listar empleados
@@ -339,5 +370,4 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	}
     return retorno;
 }
-
 
