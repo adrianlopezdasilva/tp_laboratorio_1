@@ -82,6 +82,19 @@ int main()
     					printf("\nPrimero debe cargar el archivo.");
     				}
     				break;
+    		case 4:
+    		    	if(flagCargaArchivo == 1)
+    		    	{
+    		    		if(controller_editEmployee(listaEmpleados) == 0)
+    		    		 {
+    		    			printf("\nEmpleado modificado exitosamente");
+    		    		 }
+    		    	}
+    		    	else
+    		    	{
+    		    		printf("\nPrimero debe cargar el archivo.");
+    		    	}
+    		    	break;
     		case 6:
     		    	if(flagCargaArchivo == 1)
     		    	{

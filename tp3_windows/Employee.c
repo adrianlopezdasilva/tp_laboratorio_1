@@ -7,6 +7,9 @@
 #include "Employee.h"
 #include "utn.h"
 
+static int isValidSueldo (int sueldo);
+static int isValidHorasTrabajadas(int horas);
+
 Employee* employee_new(void)
 {
 	return (Employee*)malloc(sizeof(Employee));
@@ -94,7 +97,7 @@ int employee_setHorasTrabajadas(Employee* this,int horasTrabajadas)
 	int retorno = -1;
 	if(this != NULL && horasTrabajadas >0)
 	{
-		if(esNumerica(this, MAXIMOHORAS) == 1)
+		if(isValidHorasTrabajadas(horasTrabajadas) == 1)
 		{
 			this->horasTrabajadas =horasTrabajadas;
 			retorno = 0;
@@ -120,7 +123,7 @@ int employee_setSueldo(Employee* this,int sueldo)
 	int retorno = -1;
 	if(this != NULL && sueldo >0)
 	{
-		if(esNumerica(this, MAXIMOSUELDO) == 1)
+		if(isValidSueldo(sueldo) == 1)
 		{
 			this->sueldo =sueldo;
 			retorno = 0;
@@ -151,7 +154,7 @@ int employee_compareByName(void* thisOne , void* thisTwo)
 		if(employee_getNombre(thisOne, nombreUno)== 0 &&
 		   employee_getNombre(thisTwo, nombreDos) == 0)
 		{
-			if(strncmp(thisOne, thisTwo, SIZENOMBRE ) > 1)
+			if(strncmp(thisOne, thisTwo, SIZENOMBRE ) > 0)
 			{
 				retorno = 1;
 			}
@@ -213,3 +216,26 @@ int employee_compareBySalary(void* thisOne , void* thisTwo)
 }
 
 
+static int isValidSueldo (int sueldo)
+{
+	int retorno = 1;
+
+	if(sueldo < 0 || sueldo > MAXIMOSUELDO)
+	{
+		retorno = -1;
+	}
+
+	return retorno;
+}
+
+static int isValidHorasTrabajadas(int horas)
+{
+	int retorno = 1;
+
+	if(horas < 0 || horas > MAXIMOHORAS)
+	{
+		retorno = -1;
+	}
+
+	return retorno;
+}

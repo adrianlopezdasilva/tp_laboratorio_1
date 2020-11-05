@@ -69,16 +69,17 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 
 	if(pArrayListEmployee != NULL)
 	{
-		if((utn_getNombre("\nIngrese el nombre del empleado: ", "\nEse no es un nombre valido", bufferNombre, 2,SIZENOMBRE) == 0) &&
-		   (utn_getNumero("\nIngrese las horas trabajadas del empleado: ", "\nEsa no es una cantidad de horas valida", &bufferHoras, 2,0,MAXIMOHORAS) == 0) &&
-		   (utn_getNumero("\nIngrese el sueldo del empleado: ", "\nEse no es un sueldo valido", &bufferSueldo, 2,0,MAXIMOSUELDO) == 0))
+		if((utn_getNombre("\nIngrese el nombre del empleado: ", "\nEse no es un nombre valido\n", bufferNombre, 2,SIZENOMBRE) == 0) &&
+		   (utn_getNumero("\nIngrese las horas trabajadas del empleado: ", "\nEsa no es una cantidad de horas valida\n", &bufferHoras, 2,0,MAXIMOHORAS) == 0) &&
+		   (utn_getNumero("\nIngrese el sueldo del empleado: ", "\nEse no es un sueldo valido\n", &bufferSueldo, 2,0,MAXIMOSUELDO) == 0))
 		{
-			employee_setNombre(bufferEmployee, bufferNombre);
-			employee_setHorasTrabajadas(bufferEmployee, bufferHoras);
-			employee_setSueldo(bufferEmployee, bufferSueldo);
-			ll_add(pArrayListEmployee, bufferEmployee);
-
-			retorno = 0;
+			if(employee_setNombre(bufferEmployee, bufferNombre)==0 &&
+			   employee_setHorasTrabajadas(bufferEmployee, bufferHoras)==0 &&
+			   employee_setSueldo(bufferEmployee, bufferSueldo)==0 )
+			{
+				ll_add(pArrayListEmployee, bufferEmployee);
+				retorno = 0;
+			}
 		}
 		else
 		{
@@ -119,7 +120,64 @@ int controller_nextId(LinkedList* pArrayListEmployee)
  */
 int controller_editEmployee(LinkedList* pArrayListEmployee)
 {
-    return 1;
+  int retorno = -1;
+  int auxId;
+  Employee* bufferEmployee;
+  char auxNombre[SIZENOMBRE];
+  int auxHoras;
+  int auxSueldo;
+  int opcion;
+
+  if(pArrayListEmployee != NULL)
+  {
+	  if(controller_ListEmployee(pArrayListEmployee) == 0 &&
+	     utn_getNumero("\nIngrese el id del empleado que desea modifcar: ", "\nEse no es un id valido\n",
+		 &auxId, 2,1,99999) == 0 )
+	  {
+		  auxId = auxId-1;
+		  bufferEmployee = ll_get(pArrayListEmployee,auxId);
+		  if(employee_getNombre(bufferEmployee, auxNombre) == 0 &&
+		     employee_getHorasTrabajadas(bufferEmployee, &auxHoras) == 0 &&
+			 employee_getSueldo(bufferEmployee, &auxSueldo) == 0 )
+		  {
+			  do
+			  {
+				  printf("\nEl employee a modificar es:\nNOMBRE: %s    -  HORAS TRABAJADAS: %d   SUELDO - %d\n",
+						  auxNombre, auxHoras, auxSueldo);
+				  if(utn_getNumero("\nQue campo desea modificar?\n1.Nombre.\n2.Horas Trabajadas.\n3.Sueldo.\n4.Salir.\n",
+				  				"\nEse no es un id valido\n",  &opcion, 2,1,4) == 0 )
+				  {
+					  switch(opcion)
+					  {
+					  case 1:
+					  		if(utn_getNombre("\nIngrese el nuevo nombre del empleado: ",
+					  		   "\nEse no es un nombre valido\n", auxNombre, 2,SIZENOMBRE) == 0)
+					  		{
+					  			employee_setNombre(bufferEmployee,auxNombre);
+					  		}
+					  		break;
+					  case 2:
+						    if(utn_getNumero("\nIngrese las nuevas horas trabajadas del empleado: ",
+						     "\nEsa no es una cantidad de horas valida\n", &auxHoras, 2,0,MAXIMOHORAS) == 0)
+						    {
+							  employee_setHorasTrabajadas(bufferEmployee,auxHoras);
+						    }
+						    break;
+					  case 3:
+						    if(utn_getNumero("\nIngrese el nuevo salario del empleado: ",
+								     "\nEse no es un salario valido\n", &auxSueldo, 2,0,MAXIMOSUELDO) == 0)
+						    {
+						    	employee_setSueldo(bufferEmployee,auxSueldo);
+						    }
+						  	break;
+					  }
+				  }
+			  }while(opcion != 4);
+			  retorno = 0;
+		  }
+	  }
+  }
+  return retorno;
 }
 
 /** \brief Baja de empleado
@@ -281,6 +339,5 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	}
     return retorno;
 }
-
 
 
