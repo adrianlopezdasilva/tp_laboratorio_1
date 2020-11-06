@@ -114,7 +114,7 @@ int controller_editEmployee(LinkedList* pArrayListEmployee)
 	     utn_getNumero("\nIngrese el id del empleado que desea modifcar: ", "\nEse no es un id valido\n",
 		 &auxId, 2,1,99999) == 0 )
 	  {
-		  bufferEmployee = findEmployeeById(pArrayListEmployee,auxId);
+		  bufferEmployee = controller_findEmployeeById(pArrayListEmployee,auxId);
 		  if(employee_getNombre(bufferEmployee, auxNombre) == 0 &&
 		     employee_getHorasTrabajadas(bufferEmployee, &auxHoras) == 0 &&
 			 employee_getSueldo(bufferEmployee, &auxSueldo) == 0 )
@@ -179,28 +179,22 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     	if(utn_getNumero("\nIngrese el id del empleado que desea borrar: ", "\nEse no es un id valido\n",
 		   &auxId, 2,1,99999) == 0)
     	{
-    		bufferEmployee = findEmployeeById(pArrayListEmployee,auxId);
+    		bufferEmployee = controller_findEmployeeById(pArrayListEmployee,auxId);
 
-    		if(bufferEmployee != NULL)
-    		{
-    			if(utn_getNumero("\nEsta seguro que quiere borrar este empleado?\n1.Abortar operacion.\n2.Confirmar borrar\n",
+    		if(utn_getNumero("\nEsta seguro que quiere borrar este empleado?\n1.Abortar operacion.\n2.Confirmar borrar\n",
     			    		"\nEse no es una opcion valida\n",&flagBorrar, 2,1,2) == 0 &&
-    			    		flagBorrar == 2)
-    			 {
-    			    idABorrar = ll_indexOf(pArrayListEmployee,bufferEmployee);
-    			    ll_remove(pArrayListEmployee, idABorrar);
-    			    printf("\nEmpleado eliminado con exito\n");
-    			  }
-    			  else
-    			  {
-    				  printf("\nOperacion abortada\n");
-    			  }
-    			   retorno = 0;
+    		   flagBorrar == 2)
+    		{
+    			idABorrar = ll_indexOf(pArrayListEmployee,bufferEmployee);
+    			ll_remove(pArrayListEmployee, idABorrar);
+    			printf("\nEmpleado eliminado con exito\n");
     		}
     		else
     		{
-    			printf("\nEse empleado no existe\n");
+    			printf("\nOperacion abortada\n");
     		}
+    		retorno = 0;
+
     	}
     }
 
@@ -352,7 +346,7 @@ int controller_saveAsBinary(char* path , LinkedList* pArrayListEmployee)
 	}
     return retorno;
 }
-/** \brief Busca un indice libre en la lista
+/** \brief Busca el proximo id en la lista
  *
  * \param pArrayListEmployee LinkedList* es donde esta contenida la direccion de memoria de la lista
  * \return int  el indice deseado o -1 si hay error
@@ -362,21 +356,19 @@ int controller_findNextId(LinkedList* pArrayListEmployee)
 {
 	int retorno = -1;
 	int auxId;
-	int flag = 0;
+	int idMaximo;
 	Employee* bufferEmployee;
 
 	if(pArrayListEmployee != NULL)
 	{
 		for(int i = 0; i < ll_len(pArrayListEmployee); i++)
 		{
-			bufferEmployee = (Employee*) ll_get(pArrayListEmployee,i);
+			bufferEmployee = (Employee*) ll_get(pArrayListEmployee, i);
 			employee_getId(bufferEmployee, &auxId);
-
-			if(flag == 0 ||auxId !=  i+1)
+			if(i == 1 || auxId > idMaximo)
 			{
-				flag = 1;
-				retorno = i+1;
-				break;
+				idMaximo = auxId;
+				retorno = idMaximo+1;
 			}
 		}
 	}
@@ -389,7 +381,7 @@ int controller_findNextId(LinkedList* pArrayListEmployee)
  * \return void*
  *
  */
-void* findEmployeeById(LinkedList* pArrayListEmployee, int id)
+void* controller_findEmployeeById(LinkedList* pArrayListEmployee, int id)
 {
 	Employee* bufferEmployee;
 	int auxId;
