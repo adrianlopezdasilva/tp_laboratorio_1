@@ -255,7 +255,7 @@ int employee_compareByName(void* thisOne , void* thisTwo)
 			{
 				retorno = 1;
 			}
-			else
+			else if(strncmp(nombreUno, nombreDos, SIZENOMBRE ) < 0)
 			{
 				retorno = -1;
 			}
@@ -286,13 +286,13 @@ int employee_compareByHoursWorked(void* thisOne , void* thisTwo)
 	if(thisOne != NULL && thisTwo != NULL)
 	{
 		if(employee_getHorasTrabajadas(bufferEmpleadoUno, &auxHorasUno)== 0 &&
-			employee_getHorasTrabajadas(bufferEmpleadoDos, &auxHorasDos) == 0)
+		   employee_getHorasTrabajadas(bufferEmpleadoDos, &auxHorasDos) == 0)
 		{
 			if(auxHorasUno > auxHorasDos)
 			{
 				retorno = 1;
 			}
-			else
+			else if (auxHorasUno < auxHorasDos)
 			{
 				retorno = -1;
 			}
@@ -321,14 +321,14 @@ int employee_compareBySalary(void* thisOne , void* thisTwo)
 
 	if(thisOne != NULL && thisTwo != NULL)
 	{
-		if(employee_getHorasTrabajadas(bufferEmpleadoUno, &auxSalarioUno)== 0 &&
-			employee_getHorasTrabajadas(bufferEmpleadoDos, &auxSalarioDos) == 0)
+		if(employee_getSueldo(bufferEmpleadoUno, &auxSalarioUno)== 0 &&
+		   employee_getSueldo(bufferEmpleadoDos, &auxSalarioDos) == 0)
 		{
 			if(auxSalarioUno > auxSalarioDos)
 			{
 				retorno = 1;
 			}
-			else
+			else if (auxSalarioUno < auxSalarioDos)
 			{
 				retorno = -1;
 			}
