@@ -365,7 +365,7 @@ int controller_findNextId(LinkedList* pArrayListEmployee)
 		{
 			bufferEmployee = (Employee*) ll_get(pArrayListEmployee, i);
 			employee_getId(bufferEmployee, &auxId);
-			if(i == 1 || auxId > idMaximo)
+			if(i == 0 || auxId > idMaximo)
 			{
 				idMaximo = auxId;
 				retorno = idMaximo+1;
@@ -383,7 +383,7 @@ int controller_findNextId(LinkedList* pArrayListEmployee)
  */
 void* controller_findEmployeeById(LinkedList* pArrayListEmployee, int id)
 {
-	Employee* bufferEmployee;
+	Employee* bufferEmployee = NULL;
 	int auxId;
 	if(pArrayListEmployee != NULL && id > 0)
 	{

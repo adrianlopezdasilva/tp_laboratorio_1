@@ -1,8 +1,0 @@
-# depslib dependency file v1.0
-1589521774 source:c:\users\mgleo\desktop\facultad\programacion 1\tp2\main.c
-	<stdio.h>
-	<stdlib.h>
-	"Employee.h"
-
-1589521707 c:\users\mgleo\desktop\facultad\programacion 1\tp2\employee.h
-

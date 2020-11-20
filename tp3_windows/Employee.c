@@ -125,7 +125,7 @@ int employee_setNombre(Employee* this,char* nombre)
 	{
 		if(esUnNombreValido(nombre,SIZENOMBRE)== 1 ) // ESTA FUNCION BUSCA SI HAY UN ERROR
 		{
-			strncpy(this->nombre,nombre, sizeof(this->nombre));
+			strcpy(this->nombre,nombre);
 			retorno = 0;
 		}
 
@@ -145,7 +145,7 @@ int employee_getNombre(Employee* this,char* nombre)
 	int retorno = -1;
 	if(this != NULL && nombre != NULL)
 	{
-		strncpy(nombre,this->nombre, SIZENOMBRE);
+		strcpy(nombre,this->nombre);
 		retorno = 0;
 	}
 	return retorno;
