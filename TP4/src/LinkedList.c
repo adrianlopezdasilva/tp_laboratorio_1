@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../inc/LinkedList.h"
+#include "LinkedList.h"
 
 
 static Node* getNode(LinkedList* this, int nodeIndex);
@@ -557,6 +557,12 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 
 }
 
+/** \brief Recorre los elementos de la lista utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                         ( 0) Si ok
+ */
 int ll_map(LinkedList* this, int (*pFunc)(void*))
 {
 	int returnAux = -1;
@@ -571,11 +577,19 @@ int ll_map(LinkedList* this, int (*pFunc)(void*))
 			pElemento = ll_get(this, i);
 			pFunc(pElemento);
 		}
+		returnAux = 0;
 	}
 
 	return returnAux;
 }
 
+/** \brief Acumula los elementos de la lista utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \param pResultado int* Puntero donde se guardara el resultado de la funcion
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                                ( 0) Si ok
+ */
 int ll_reduceInt(LinkedList* this, int (*pFunc)(void*), int* pResultado)
 {
 	int returnAux = -1;
@@ -598,6 +612,13 @@ int ll_reduceInt(LinkedList* this, int (*pFunc)(void*), int* pResultado)
 	return returnAux;
 }
 
+/** \brief Acumula los elementos de la lista utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \param pResultado float* Puntero donde se guardara el resultado de la funcion
+ * \return int Retorna  (-1) Error: si el puntero a la listas es NULL
+                                ( 0) Si ok
+ */
 
 int ll_reduceFloat(LinkedList* this, float (*pFunc)(void*), float* pResultado)
 {
@@ -621,28 +642,32 @@ int ll_reduceFloat(LinkedList* this, float (*pFunc)(void*), float* pResultado)
 	return returnAux;
 }
 
-int ll_filter(LinkedList* this, int (*pFunc)(void*))
+/** \brief Ordena los elementos de la lista utilizando la funcion criterio recibida como parametro
+ * \param pList LinkedList* Puntero a la lista
+ * \param pFunc (*pFunc) Puntero a la funcion criterio
+ * \param order int  [1] Indica orden ascendente - [0] Indica orden descendente
+ * \return LinkedList Retorna una nueva lista con los elementos deseados
+ */
+LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*))
 {
-	int returnAux = -1;
 	int len;
 	int i = 0;
 	void* pElemento;
+	LinkedList* newList = NULL;
 
 	if(this != NULL && pFunc != NULL)
 	{
+		newList = ll_newLinkedList();
 		len = ll_len(this);
-		while ( i  < len)
+		while (i < len)
 		{
 			pElemento = ll_get(this, i);
-			if(pFunc(pElemento) == 0 )
+			if(pFunc(pElemento) == 1 )
 			{
-				ll_remove(this, i);
+				ll_add(newList, pElemento);
 			}
-			else
-			{
-				i++;
-			}
+			i++;
 		}
 	}
-	return returnAux;
+	return newList;
 }
